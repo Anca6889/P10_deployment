@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+{% extends "base/main.html" %}
 {% load static %}
 
 {% block body_content %}
@@ -57,13 +57,13 @@
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-6 text-center">
+                <div class="col-md-6 col-sm-12 text-center">
                     <div class="mt-2">
                         <img src="{% static 'assets/img/colette-tatou-full.png' %}" width="40%" class="mb-3">
                         <h3 class="h4">Colette</h3>
                     </div>
                 </div>
-                <div class="col-6 text-center align-self-end ">
+                <div class="col-md-6 col-sm-12 text-center align-self-end ">
                     <div class="mt-2">
                         <img src="{% static 'assets/img/ratatouille-portrait.jpg' %}" width="50%" class="mb-3">
                         <h3 class="h4">Remy</h3>
@@ -73,13 +73,73 @@
         </div>
     </div>
 </section>
+<div id="portfolio">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/1.jpg' %}" title="Remy, se faisant une place dans la société ">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/1.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Remy</div>
+                        <div class="project-name">Se faisant une place dans la société</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/2.jpg' %}" title="Remy, rêvant de Colette">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/2.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Remy</div>
+                        <div class="project-name">Rêvant de Colette</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/3.jpg' %}" title="Remy, cherchant l'inspiration">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/3.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Remy</div>
+                        <div class="project-name">Cherchant l'inspiration</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/4.jpg' %}" title="Colette heureuse, simplement">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/4.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Colette</div>
+                        <div class="project-name">Heureuse, simplement</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/5.jpg' %}" title="Colette, toujours persuadée de pouvoir lire sans ses lunettes">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/5.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Colette</div>
+                        <div class="project-name">Toujours persuadée de pouvoir lire sans ses lunettes</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="{% static 'assets/img/portfolio/fullsize/6.jpg' %}" title="Colette, lisant un article du Gorafi">
+                    <img class="img-fluid" src="{% static 'assets/img/portfolio/thumbnails/6.jpg' %}" alt="..." />
+                    <div class="portfolio-box-caption p-3">
+                        <div class="project-category text-white-50">Colette</div>
+                        <div class="project-name">Lisant un article du Gorafi</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="page-section bg-secondary" id="contact">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h2 class="mt-0 text-white">Contactez-nous!</h2>
                 <hr class="divider my-4" />
-                <p class="mb-5 text-white">Une question, une envie ? N'hésitez pas à nous contacter !</p>
+                <p class="mb-5 text-white">Une question, une envie? N'hésitez pas à nous contacter !</p>
             </div>
         </div>
         <div class="row justify-content-center">

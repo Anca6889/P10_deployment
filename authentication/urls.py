@@ -1,11 +1,7 @@
+from django.urls import path
+from authentication import views
 
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-
-
-class UserRegisterForm(UserCreationForm):
-    """Create the formular for new user register"""
-
-    email = forms.EmailField(max_length=254)
-    username = forms.CharField(max_length=60)
-
+urlpatterns = [
+    path('sign_in/', views.sign_in, name= "sign_in"),
+    path('login/', views.login, name="login"),
+]

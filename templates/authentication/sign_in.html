@@ -1,0 +1,41 @@
+{% extends "base/main.html" %}
+
+{% block body_content %}
+
+<header class="masthead">
+    <div class="row py-3 justify-content-center">
+        <div class="bg-white col-10 col-lg-6 rounded">
+            <h2 class="my-4"> Créer un nouveau compte </h2>
+            <form method="POST" action="">
+                <p> Veuillez renseigner les champs ci-dessous: </p>
+                <p class="text-primary mt-3" style="font-size: 0.9rem"><em>* tous les champs sont obligatoires :</em>
+
+                    {% csrf_token %}
+                    <div class="my-3">
+                        {{ form.email }}
+                    </div>
+                    <div class="my-3">
+                        {{ form.username }}
+                    </div>
+                    <div class="my-3">
+                        {{ form.password1 }}
+                    </div>
+                    <div class="my-3">
+                        {{ form.password2 }}
+                    </div>
+                    <ul class="text-primary mt-3" style="font-size: 0.9rem">
+                        <li><em>Votre mot de passe doit contenir au moins 8 caractères</em></li>
+                        <li><em>Votre mot de passe ne doit pas être entièrement numérique</em></li>
+                    </ul>
+                <input id="registration_button" type="submit" name="Register" value="Valider" class="btn btn-primary mb-3">
+            </form>
+            <div class="row py-3">
+                <p style="font-size: 1rem">Déjà enregistré ? &nbsp <a class="col-6 col-lg-4" href="{% url 'login' %}"> Se connecter</a></p>
+                
+            </div>
+        </div>
+    </div>
+
+</header>
+
+{% endblock %}
