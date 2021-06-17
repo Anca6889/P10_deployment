@@ -15,7 +15,7 @@
                     {{ form.password }}
                 </div>
                 {% if request.GET.next %}
-                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
                 {% endif %}
                 <input id="login_button" type="submit" name="Login" value="Valider" class="btn btn-primary mt-3 mb-3">
             </form>

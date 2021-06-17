@@ -43,8 +43,13 @@
                             </button>
                         </form>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'account' %}">Mon Compte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a></li>
+                    {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Se connecter</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'sign_in' %}">S'inscrire</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -1,13 +1,59 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import SignInForm, LoginForm
+import time
 
 def sign_in(request):
-    form = SignInForm(request.POST)
+    form = SignInForm()
+
+    if request.method == "POST":
+        form = SignInForm(request.POST)
+
+        if form.is_valid():
+            messages.success(
+                request, "Votre compte a été crée avec succès ! Vous allez être redirigé dans un instant.")
+            time.sleep(4)
+            user = form.save()
+            login(request, user)
+            return render(request, "base/home.html")
+        else:
+            print(form.errors)
+            for field in form.errors:
+                print(field)
+
     context = {'form' : form}
     return render(request, "authentication/sign_in.html", context)
 
-def login(request):
-    form = LoginForm(request.POST)
+def sign_up(request):
+    form = LoginForm()
+
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            if "next" in request.POST:
+                return redirect(request.POST.get("next"))
+            else:
+                return render(request, "base/home.html")
+        else:
+            messages.error(request, "L'email ou le mot de passe est incorrect")
+
     context = {'form' : form}
+
     return render(request, "authentication/login.html", context)
+
+@login_required()
+def account(request):
+    actual_user = request.user
+    context = {"user": actual_user}
+    return render(request, "authentication/account.html", context)
+
+@login_required()
+def sign_out(request):
+    logout(request)
+    return render(request, "base/home.html")

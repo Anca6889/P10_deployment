@@ -76,7 +76,3 @@ class LoginForm(forms.Form):
             }
         )
     )
-
-    class Meta:
-        model = User
-        fields = ["login_email", "login-password"]

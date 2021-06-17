@@ -1,0 +1,17 @@
+{% extends "base/main.html" %}
+
+{% block body_content %}
+<header class="masthead">
+
+    <div class="row py-3 justify-content-center">
+        <div class="bg-white col-10 col-lg-6 rounded">
+            <h3 class="text-primary mt-3 text-center"> Mon compte </h3>
+            <hr class="divider my-4" />
+            <h5 class= "text-primary mt-3 ">Nom d'utilisateur </h5>
+            <div> {{ user.username }} </div>
+            <h5 class="text-primary mt-3 ">Adresse email </h5>
+            <div class= "pb-3"> {{ user.email }} </div>
+        </div>   
+    </div>
+</header>
+{% endblock %}
