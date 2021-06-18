@@ -12,6 +12,7 @@ def get_legal_notice(request):
 def get_contact(request):
     return render(request, "base/contact.html")
 
+#ON AFFICHIRA PAR ICI NOS PRODUITS
 # def product(request):
 #     product = Product.objects.all()
-#     return render(request, "product.html")
+#     return render(request, "product.html") 
