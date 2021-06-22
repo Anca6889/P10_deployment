@@ -13,9 +13,9 @@ def sign_in(request):
 
         if form.is_valid():
             messages.success(
-                request, "Votre compte a été crée avec succès. Merci de vous connecter")
+                request, "Votre compte a été crée avec succès !")
             user = form.save()
-            login(request, user)
+            login(request, user, backend='authentication.backend.AuthenticationBackend')
             return redirect(reverse('login'))
         else:
             print(form.errors)
@@ -29,9 +29,9 @@ def sign_up(request):
     form = LoginForm()
 
     if request.method == "POST":
-        email = request.POST.get("email")
+        email_or_user = request.POST.get("email")
         password = request.POST.get("password")
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=email_or_user, password=password)
 
         if user is not None:
             login(request, user)

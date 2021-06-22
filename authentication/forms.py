@@ -63,7 +63,7 @@ class LoginForm(forms.Form):
             attrs={
                 "id": "login_email",
                 "class": "form-control",
-                "placeholder": "Adresse email",
+                "placeholder": "Adresse email ou nom d'utilisateur",
             }
         )
     )
