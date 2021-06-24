@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db.utils import DataError, IntegrityError
 from app.models import Product, Category
+from progress.bar import FillingSquaresBar
 
 import requests
 
@@ -50,7 +51,7 @@ class Command(BaseCommand):
 
         FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url"
 
-        PAGE_SIZE = 100
+        PAGE_SIZE = 150
         # SETTING END
 
         payload = {
@@ -66,21 +67,27 @@ class Command(BaseCommand):
         }
 
         products = []
+        with FillingSquaresBar(
+            "Downloading products from OFF...",
+                max=len(CATEGORIES), suffix="%(percent)d%%") as bar:
+        
+            for category in CATEGORIES:
+                self.insert_category_in_db(category)
+                payload["tag_0"] = category
+                
+                try:
+                    data = requests.get(URL, params=payload)
+                    results = data.json()
+                    products.append(results['products'])
+                    
+                    
+                except ValueError as err:
+                    print("Error: {}".format(err))
+                
+                bar.next()
+        bar.finish()
 
-        print("Requesting OFF, removing corrupted products and inserting products in db...")
-        for category in CATEGORIES:
-            self.insert_category_in_db(category)
-            payload["tag_0"] = category
-
-            try:
-                data = requests.get(URL, params=payload)
-                results = data.json()
-                products.append(results['products'])
-                self.delete_uncomplete_products(products)
-
-            except ValueError as err:
-                print("Error: {}".format(err))
-        print("Process achieved with succsess !")
+        self.delete_uncomplete_products(products)
 
     def insert_category_in_db(self, categories):
 
@@ -91,24 +98,33 @@ class Command(BaseCommand):
     def delete_uncomplete_products(self, products):
 
         complete_products = []
-        for list in products:
-            for p in list:
-                if (
-                    p.get("product_name_fr")
-                    and p.get("brands")
-                    and p.get("nutriscore_grade")
-                    and p.get("url")
-                    and p.get('image_front_url')
-                    and p.get("nutriscore_grade") is not None
-                ):
+        with FillingSquaresBar(
+            "Removing corrupted products...",
+                max=len(products), suffix="%(percent)d%%") as bar:
 
-                    complete_products.append(p)
+            for list in products:
+                for p in list:
+                    if (
+                        p.get("product_name_fr")
+                        and p.get("brands")
+                        and p.get("nutriscore_grade")
+                        and p.get("url")
+                        and p.get('image_front_url')
+                        and p.get("nutriscore_grade") is not None
+                    ):
+                        complete_products.append(p)
+
+                    bar.next()
+        bar.finish()
 
         self.insert_products_in_db(complete_products)
 
     def insert_products_in_db(self, products):
         
-        for product in products:
+        with FillingSquaresBar(
+            "Insering products in database...",
+                max=len(products), suffix="%(percent)d%%") as bar:
+            for product in products:
 
                 try:
                     product_name_fr = product['product_name_fr']
@@ -139,7 +155,9 @@ class Command(BaseCommand):
 
                 except KeyError:
                     pass
-
+                bar.next()
+        bar.finish()
+        print("Process achieved with succsess !")
     def handle(self, *args, **options):
 
         self.launch_process()

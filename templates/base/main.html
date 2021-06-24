@@ -35,7 +35,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li>
-                        <form method="get">
+                        <form method="POST" action="{% url 'product_list' %}">
+                            {% csrf_token %}
                             <input id="navbar-search" name="q" type="text" placeholder="chercher un aliment"
                                 class="rounded border-0 p-1" required>
                             <button type="submit" class="btn p-0">
