@@ -30,6 +30,13 @@ class Command(BaseCommand):
 
         # SETTING BEGIN
         CATEGORIES = [
+            "aliments-et-boissons-a-base-de-vegetaux",
+            "aliments-d-origine-vegetale",
+            "boissons",
+            "produits-de-la-mer",
+            "sauces",
+            "confiseries",
+            "conserves",
             "pates-a-tartiner",
             "petit-dejeuners",
             "sodas",
@@ -46,12 +53,11 @@ class Command(BaseCommand):
             "surgeles",
             "pizzas"
         ]
-
         URL = "https://fr.openfoodfacts.org/cgi/search.pl"
 
-        FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url"
+        FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url,categories"
 
-        PAGE_SIZE = 150
+        PAGE_SIZE = 500
         # SETTING END
 
         payload = {
@@ -67,33 +73,26 @@ class Command(BaseCommand):
         }
 
         products = []
+
         with FillingSquaresBar(
             "Downloading products from OFF...",
                 max=len(CATEGORIES), suffix="%(percent)d%%") as bar:
-        
+
             for category in CATEGORIES:
-                self.insert_category_in_db(category)
                 payload["tag_0"] = category
-                
+
                 try:
                     data = requests.get(URL, params=payload)
                     results = data.json()
                     products.append(results['products'])
-                    
-                    
+                    bar.next()
+
                 except ValueError as err:
                     print("Error: {}".format(err))
-                
-                bar.next()
+        
         bar.finish()
-
+        print("downloading completed !")
         self.delete_uncomplete_products(products)
-
-    def insert_category_in_db(self, categories):
-
-        Category.objects.get_or_create(
-            name = categories
-        )
 
     def delete_uncomplete_products(self, products):
 
@@ -116,48 +115,81 @@ class Command(BaseCommand):
 
                     bar.next()
         bar.finish()
+        self.get_categories(complete_products)
 
-        self.insert_products_in_db(complete_products)
-
-    def insert_products_in_db(self, products):
+    def get_categories(self, products):
         
+        categories = []
         with FillingSquaresBar(
             "Insering products in database...",
                 max=len(products), suffix="%(percent)d%%") as bar:
+
             for product in products:
-
-                try:
-                    product_name_fr = product['product_name_fr']
-                    brands = product['brands']
-                    nutriscore_grade = product['nutriscore_grade']
-                    stores = product['stores']
-                    url = product['url']
-                    image = product['image_front_url']
-
-                    try:
-
-                        Product.objects.get_or_create(
-                            product_name_fr=product_name_fr,
-                            brands=brands,
-                            nutriscore_grade=nutriscore_grade,
-                            stores=stores,
-                            url=url,
-                            image=image,
-                        )
-                    except KeyError:
+                prod_cats = []
+                min_cats = product["categories"].lower().split(
+                    ", " and ",")
+                for min_cat in min_cats:
+                    category = min_cat.strip()
+                    if category.startswith("en") or category.startswith("fr"):
                         pass
+                    else:
+                        prod_cats.append(category)
+                        if category not in categories:
+                            categories.append(category)
+                product["categories"] = prod_cats
+    
+                self.insert_categories(prod_cats, product)
 
-                    except DataError:
-                        pass
-
-                    except IntegrityError:
-                        pass
-
-                except KeyError:
-                    pass
                 bar.next()
-        bar.finish()
+            bar.finish()
+
         print("Process achieved with succsess !")
+
+    def insert_categories(self, categories, product):
+
+        for category in categories:
+            cat = Category.objects.get_or_create(
+            name=category)
+
+            self.insert_product_in_db(product, cat[0])
+            
+
+    def insert_product_in_db(self, product, cat):
+    
+        try:
+            product_name_fr = product['product_name_fr']
+            brands = product['brands']
+            nutriscore_grade = product['nutriscore_grade']
+            stores = product['stores']
+            url = product['url']
+            image = product['image_front_url']
+            
+            try:
+
+                prod = Product.objects.get_or_create(
+                    product_name_fr=product_name_fr,
+                    brands=brands,
+                    nutriscore_grade=nutriscore_grade,
+                    stores=stores,
+                    url=url,
+                    image=image,
+                )[0]
+
+                prod.categories.add(cat)
+
+            except KeyError:
+                pass
+
+            except DataError:
+                pass
+
+            except IntegrityError:
+                pass
+
+        except KeyError:
+            pass
+
+
     def handle(self, *args, **options):
 
         self.launch_process()

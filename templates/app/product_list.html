@@ -1,37 +1,59 @@
-{% extends "base/main.html" %}
+{% extends "base/home.html" %}
 
-{% block body_content %}
+{% block product_list %}
+{% load static %}
 
 
-<div class="container">
-    {% if products %}
-    <div class="row py-1">
-        <div class="col-12 py-2 bg-white rounded text-primary">Résultats</div>
-    </div>
-
-    <div class="container search_results overflow-auto pt-2" id="results">
-        {% for product in products %}
-        <div class="row m-lg-1 p-lg-2 bg-white rounded align-items-center py-2 my-1">
-            <div class="col-5 col-lg-3">
-                <img src="{{ product.image }}" class="card_image">
-            </div>
-            <div class="col-7 col-lg-7 text-left">
-                <span class="font-weight-bold"> Nom: </span> {{ product.product_name_fr }} <br>
-                <span class="font-weight-bold"> Marque: </span> {{ product.brands }}
-            </div>
-            <div class="col-md-4 col-lg-2">
-                <a href="{{ product.get_substitutes }}" class="btn btn-outline-primary mt-2" role="button">Trouver un
-                    substitut</a>
-            </div>
+{% if products %}
+    <div class="row text-center justify-content-center align-items-center m-5">
+        <div class="col-auto text-white">
+            <h4>Résultat de votre recherche:</h4>
         </div>
-        {% endfor %}
-        {% else %}
+    </div>
+    <div class="container h-50 w-75 overflow-auto pt-2">
         <div class="row">
-            <div class="col-12 py-lg-2 bg-primary rounded text-white">Nous n'avons pas trouvé de produits correspondant
-                à votre recherche....</div>
+            {% for product in products %}
+            <div class="col-lg-4 col-md-12">
+                <div class="card mx-1 my-3 shadow p-3 mb-5 bg-white rounded">
+                    {% if product.nutriscore_grade == "a" %}
+                    <div class="d-flex flex-row-reverse">
+                        <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
+                    </div>
+                    {% elif product.nutriscore_grade == "b" %}
+                    <div class="d-flex flex-row-reverse">
+                        <img src="/static/assets/img/B.png" WIDTH=100 HEIGHT=40 />
+                    </div>
+                    {% elif product.nutriscore_grade == "c" %}
+                    <div class="d-flex flex-row-reverse">
+                        <img src="/static/assets/img/C.png" WIDTH=100 HEIGHT=40 />
+                    </div>
+                    {% elif product.nutriscore_grade == "d" %}
+                    <div class="d-flex flex-row-reverse">
+                        <img src="/static/assets/img/D.png" WIDTH=100 HEIGHT=40 />
+                    </div>
+                    {% else %}
+                    <div class="d-flex flex-row-reverse">
+                        <img src="/static/assets/img/E.png" WIDTH=100 HEIGHT=40 />
+                    </div>
+                    {% endif %}
+                    <img class="card-img-top" src="{{ product.image }}" style="object-fit: contain; height: 20em"/>
+                    <div class="text-primary"> {{ product.brands }} <br></div>
+                    <div class="text-secondary"> <em>{{ product.product_name_fr }}</em><br></div>
+                    <a href="{% url 'substitutes' product.id %}" class="btn btn-outline-primary mt-2" role="button">Chercher un substitut</a>
+                </div>
+                
+            </div>
+            {% endfor %}
         </div>
-        {% endif %}
     </div>
-</div>
 
+{% else %}
+    <div class="container">
+        <div class="row text-center justify-content-center align-items-center m-5">
+            <div class="col-auto text-white">
+                <h3>Désolé, nous n'avons pas trouvé de produit correspondant à votre recherche.</h3>
+            </div>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base/home.html" %}
+{% load static %}
+
+{% block body_content %}
+
+{% if substitutes %}
+<div class="row text-center justify-content-center align-items-center m-5">
+    <div class="col-auto text-white">
+        <h4>Résultat de votre recherche:</h4>
+    </div>
+</div>
+<div class="container h-50 w-75 pt-2">
+    <div class="row">
+        {% for substitute in substitutes %}
+        <div class="col-lg-4 col-md-12">
+            <div class="card mx-1 my-3 shadow p-3 mb-5 bg-white rounded">
+                {% if substitute.nutriscore_grade == "a" %}
+                <div class="d-flex flex-row-reverse">
+                    <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
+                </div>
+                {% elif substitute.nutriscore_grade == "b" %}
+                <div class="d-flex flex-row-reverse">
+                    <img src="/static/assets/img/B.png" WIDTH=100 HEIGHT=40 />
+                </div>
+                {% elif substitute.nutriscore_grade == "c" %}
+                <div class="d-flex flex-row-reverse">
+                    <img src="/static/assets/img/C.png" WIDTH=100 HEIGHT=40 />
+                </div>
+                {% elif substitute.nutriscore_grade == "d" %}
+                <div class="d-flex flex-row-reverse">
+                    <img src="/static/assets/img/D.png" WIDTH=100 HEIGHT=40 />
+                </div>
+                {% else %}
+                <div class="d-flex flex-row-reverse">
+                    <img src="/static/assets/img/E.png" WIDTH=100 HEIGHT=40 />
+                </div>
+                {% endif %}
+                <img class="card-img-top" src="{{ substitute.image }}" style="object-fit: contain; height: 20em" />
+                <div class="text-primary"> {{ substitute.brands }} <br></div>
+                <div class="text-secondary"> <em>{{ substitute.product_name_fr }}</em><br></div>
+                <a href="{% url 'substitutes' product.id %}" class="btn btn-outline-primary mt-2" role="button">Chercher
+                    un substitut</a>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<div class="container">
+    <div class="row text-center justify-content-center align-items-center m-5">
+        <div class="col-auto text-black">
+            <h3>Désolé, nous n'avons pas trouvé de produit de substitution plus sain.</h3>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
