@@ -46,3 +46,10 @@ def get_substitutes(request, product_id):
     context = {"product": product_to_replace, "substitutes": substitutes}
 
     return render(request, "app/substitutes.html", context)
+
+def get_product_details(request, product_id):
+
+    product = Product.objects.get(pk=product_id)
+    context = {"product": product}
+
+    return render(request, "app/product_details.html", context)

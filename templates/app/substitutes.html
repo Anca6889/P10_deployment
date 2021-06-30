@@ -4,56 +4,93 @@
 {% block body_content %}
 
 {% if substitutes %}
-<div class="row text-center justify-content-center align-items-center m-5">
-    <div class="col-auto text-white">
-        <h4>Résultat de votre recherche:</h4>
+<section class="page-section"
+    style="background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url({% static 'assets/img/bg-products.jpg' %})">
+    <div class="row text-center justify-content-center align-items-center">
+        <div class="col-auto text-white">
+            <p><i>Vous avez choisi:</i></p>
+            <h3>{{ product.product_name_fr }}</h3>
+        </div>
     </div>
-</div>
-<div class="container h-50 w-75 pt-2">
-    <div class="row">
+    <div class="row text-center justify-content-center align-items-center">
+        <div class="card mx-1 my-3 shadow p-3 mb-5 border-primary rounded-lg col-lg-4 col-md-6 ">
+            {% if product.nutriscore_grade == "a" %}
+            <div class="d-flex flex-row justify-content-center my-1">
+                <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
+            </div>
+            {% elif product.nutriscore_grade == "b" %}
+            <div class="d-flex flex-row justify-content-center my-1">
+                <img src="/static/assets/img/B.png" WIDTH=100 HEIGHT=40 />
+            </div>
+            {% elif product.nutriscore_grade == "c" %}
+            <div class="d-flex flex-row justify-content-center my-1">
+                <img src="/static/assets/img/C.png" WIDTH=100 HEIGHT=40 />
+            </div>
+            {% elif product.nutriscore_grade == "d" %}
+            <div class="d-flex flex-row justify-content-center my-1">
+                <img src="/static/assets/img/D.png" WIDTH=100 HEIGHT=40 />
+            </div>
+            {% else %}
+            <div class="d-flex flex-row justify-content-center my-1">
+                <img src="/static/assets/img/E.png" WIDTH=100 HEIGHT=40 />
+            </div>
+            {% endif %}
+            <img class="card-img-top" src="{{ product.image }}" style="object-fit: contain; height: 20em" />
+        </div>
+    </div>
+    <div class="row text-center justify-content-center align-items-center">
+        <div class="col-auto text-white">
+            <h4>Vous pouvez remplacer cet aliment par:</h4>
+        </div>
+    </div>
+</section>
+<section class="page-section"
+    style="background: linear-gradient(to bottom, rgba(207, 207, 207, 0.8) 0%, rgba(160, 160, 160, 0.8) 100%)">
+    <div class="row text-center justify-content-center align-items-centers">
         {% for substitute in substitutes %}
         <div class="col-lg-4 col-md-12">
-            <div class="card mx-1 my-3 shadow p-3 mb-5 bg-white rounded">
+            <div class="card mx-3 shadow p-3 mb-5 bg_white border-primary rounded">
                 {% if substitute.nutriscore_grade == "a" %}
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
                 </div>
                 {% elif substitute.nutriscore_grade == "b" %}
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/B.png" WIDTH=100 HEIGHT=40 />
                 </div>
                 {% elif substitute.nutriscore_grade == "c" %}
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/C.png" WIDTH=100 HEIGHT=40 />
                 </div>
                 {% elif substitute.nutriscore_grade == "d" %}
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/D.png" WIDTH=100 HEIGHT=40 />
                 </div>
                 {% else %}
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/E.png" WIDTH=100 HEIGHT=40 />
                 </div>
                 {% endif %}
                 <img class="card-img-top" src="{{ substitute.image }}" style="object-fit: contain; height: 20em" />
                 <div class="text-primary"> {{ substitute.brands }} <br></div>
                 <div class="text-secondary"> <em>{{ substitute.product_name_fr }}</em><br></div>
-                <a href="{% url 'substitutes' product.id %}" class="btn btn-outline-primary mt-2" role="button">Chercher
-                    un substitut</a>
+                <a href="{% url 'product' substitute.id %}" class="btn btn-outline-primary mt-2" role="button">Fiche
+                    produit</a>
             </div>
 
         </div>
         {% endfor %}
     </div>
-</div>
+</section>
 
 {% else %}
-<div class="container">
-    <div class="row text-center justify-content-center align-items-center m-5">
-        <div class="col-auto text-black">
-            <h3>Désolé, nous n'avons pas trouvé de produit de substitution plus sain.</h3>
+<section class="page-section h-75"
+    style="background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url({% static 'assets/img/bg-products.jpg' %})">
+    <div class="row h-100 text-center justify-content-center align-items-center">
+        <div class="col-auto text-white">
+            <h4>Désolé, nous n'avons pas trouvé de produit de substitution plus sain.</h4>
         </div>
     </div>
-</div>
+</section>
 {% endif %}
 {% endblock %}
