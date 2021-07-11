@@ -13,8 +13,8 @@
     <div class="container h-50 w-75 overflow-auto pt-2">
         <div class="row">
             {% for product in products %}
-            <div class="col-lg-4 col-md-12">
-                <div class="card mx-1 my-3 shadow p-3 mb-5 border-primary rounded">
+            <div class="col-lg-4 col-md-12 d-flex align-items-stretch">
+                <div class="card mx-1 my-3 shadow p-3 mb-5 border-primary rounded flex-fill">
                     {% if product.nutriscore_grade == "a" %}
                     <div class="d-flex flex-row-reverse mb-1">
                         <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
@@ -37,10 +37,23 @@
                     </div>
                     {% endif %}
                     <img class="card-img-top" src="{{ product.image }}" style="object-fit: contain; height: 20em"/>
-                    <div class="text-primary"> {{ product.brands }} <br></div>
-                    <div class="text-secondary"> <em>{{ product.product_name_fr }}</em><br></div>
-                    <a href="{% url 'substitutes' product.id %}" class="btn btn-outline-primary mt-2" role="button">Chercher un substitut</a>
-                    <a href="{% url 'product' product.id %}" class="btn btn-outline-primary mt-2" role="button">Fiche produit</a>
+                    <div class="card-body">
+                        <div class="text-primary"><br> {{ product.brands }} <br></div>
+                        <div class="text-secondary"> <em>{{ product.product_name_fr }}</em><br><br></div>
+                    </div>
+                    <div class="card-footer row">
+                        {% if user.is_authenticated %}
+                            {% if product.is_fav %}
+                                <a href="{% url 'add_favorite' product.id %}" class="bi bi-heart-fill" style="font-size: 2rem" role="button"
+                                    data-toggle="tooltip" data-placement="bottom" title="Retirer des favoris"></a>
+                            {% else %}
+                                <a href="{% url 'add_favorite' product.id %}" class="bi bi-heart" style="font-size: 2rem" role="button"
+                                    data-toggle="tooltip" data-placement="bottom" title="Ajouter aux favoris"></a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="{% url 'substitutes' product.id %}" class="btn btn-outline-primary mt-2" role="button">Chercher un substitut</a>
+                        <a href="{% url 'product' product.id %}" class="btn btn-outline-primary mt-2" role="button">Fiche produit</a>
+                    </div>
                 </div>
             </div>
             {% endfor %}

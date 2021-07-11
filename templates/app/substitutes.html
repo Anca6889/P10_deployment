@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row text-center justify-content-center align-items-center">
-        <div class="card mx-1 my-3 shadow p-3 mb-5 border-primary rounded-lg col-lg-4 col-md-6 ">
+        <div class="card mx-1 my-3 shadow p-3 mb-5 border-primary rounded-lg col-lg-4 col-md-6">
             {% if product.nutriscore_grade == "a" %}
             <div class="d-flex flex-row justify-content-center my-1">
                 <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
@@ -48,8 +48,8 @@
     style="background: linear-gradient(to bottom, rgba(207, 207, 207, 0.8) 0%, rgba(160, 160, 160, 0.8) 100%)">
     <div class="row text-center justify-content-center align-items-centers">
         {% for substitute in substitutes %}
-        <div class="col-lg-4 col-md-12">
-            <div class="card mx-3 shadow p-3 mb-5 bg_white border-primary rounded">
+        <div class="col-lg-4 col-md-12 d-flex align-items-stretch">
+            <div class="card mx-3 shadow p-3 mb-5 bg_white border-primary rounded flex-fill">
                 {% if substitute.nutriscore_grade == "a" %}
                 <div class="d-flex flex-row-reverse mb-1">
                     <img src="/static/assets/img/A.png" WIDTH=100 HEIGHT=40 />
@@ -72,10 +72,23 @@
                 </div>
                 {% endif %}
                 <img class="card-img-top" src="{{ substitute.image }}" style="object-fit: contain; height: 20em" />
-                <div class="text-primary"> {{ substitute.brands }} <br></div>
-                <div class="text-secondary"> <em>{{ substitute.product_name_fr }}</em><br></div>
-                <a href="{% url 'product' substitute.id %}" class="btn btn-outline-primary mt-2" role="button">Fiche
-                    produit</a>
+                <div class="card-body">
+                    <div class="text-primary"><br> {{ substitute.brands }} <br></div>
+                    <div class="text-secondary"> <em>{{ substitute.product_name_fr }}</em><br><br></div>
+                </div>
+                <div class="card-footer row">
+                    {% if user.is_authenticated %}
+                        {% if substitute.is_fav %}
+                            <a href="{% url 'add_favorite' substitute.id %}" class="bi bi-heart-fill" style="font-size: 2rem" role="button"
+                                data-toggle="tooltip" data-placement="bottom" title="Retirer des favoris"></a>
+                        {% else %}
+                            <a href="{% url 'add_favorite' substitute.id %}" class="bi bi-heart" style="font-size: 2rem" role="button"
+                                data-toggle="tooltip" data-placement="bottom" title="Ajouter aux favoris"></a>
+                        {% endif %}
+                    {% endif %}
+                    <a href="{% url 'product' substitute.id %}" class="btn btn-outline-primary mt-2" role="button">Fiche
+                        produit</a>
+                </div>
             </div>
 
         </div>

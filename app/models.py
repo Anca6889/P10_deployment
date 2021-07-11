@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Product(models.Model):
     url = models.CharField(max_length=2000)
     image = models.TextField(default=None)
     categories = models.ManyToManyField(Category)
+    favorites = models.ManyToManyField(User)
 
     def __str__(self):
         return self.product_name_fr
-
