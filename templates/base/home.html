@@ -13,9 +13,8 @@
         <div class="col-lg-8 align-self-baseline">
             <p class="text-white-75 mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous
                 les jours.</p>
-            <form method="POST" action="{% url 'product_list' %}" >
-                {% csrf_token %}
-                <input id="home-search" name="q" type="text" placeholder="chercher un aliment"
+            <form method="get" action="{% url 'product_list' %}" >
+                <input id="home-search" name="search" type="text" placeholder="chercher un aliment"
                     class="border-0 rounded p-1" required>
                 <input type="submit" value="Chercher" class="btn btn-primary">
             </form>

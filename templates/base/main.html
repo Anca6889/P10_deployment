@@ -35,9 +35,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li>
-                        <form method="POST" action="{% url 'product_list' %}">
-                            {% csrf_token %}
-                            <input id="navbar-search" name="q" type="text" placeholder="chercher un aliment"
+                        <form method="get" action="{% url 'product_list' %}">
+                            <input id="navbar-search" name="search" type="text" placeholder="chercher un aliment"
                                 class="rounded border-0 p-1" required>
                             <button type="submit" class="btn p-0">
                                 <i class="bi bi-search btn-primary p-2 rounded"></i>
@@ -46,6 +45,9 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'account' %}">Mon Compte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'favorites' %}"><img
+                                src="{% static 'assets/img/carrot.png' %}" width="40px" data-toggle="tooltip"
+                                data-placement="bottom" title="Mes aliments favoris"></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Se connecter</a></li>
@@ -57,7 +59,7 @@
     </nav>
 
     {% block body_content %} {% endblock %}
-    
+
     <!-- Footer-->
     <footer class="bg-light py-5">
         <div class="row">

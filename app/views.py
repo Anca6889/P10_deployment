@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category
 from django.http import HttpResponseRedirect
-
+from django.views.generic import ListView
 
 
 def main(request):
@@ -18,30 +18,23 @@ def get_contact(request):
     return render(request, "base/contact.html")
 
 
-def explore_products(request):
-    
-    if request.method == "POST":
-        search = request.POST.get("q")
-        products = Product.objects.filter(
-            product_name_fr__contains=search.strip().lower().capitalize()
-        )[:24]
-        for product in products:
-            if product.favorites.filter(id=request.user.id).exists():
-                product.is_fav = True
-            else:
-                product.is_fav = False
+class SearchResults(ListView):
 
-        context = {
-            "search": search,
-            "products": products,
-        }
-        return render(request, "app/product_list.html", context)
+    model = Product
+    template_name = "app/product_list.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get("search")
+        return Product.objects.filter(
+            Q(product_name_fr__icontains=query)
+            )
 
 def get_substitutes(request, product_id):
-    
+
     product_to_replace = Product.objects.get(pk=product_id)
 
-    product_category = Category.objects.filter(product__id=product_to_replace.id)
+    product_category = Category.objects.filter(
+        product__id=product_to_replace.id)
 
     substitutes = (
         Product.objects.filter(categories__in=product_category)
@@ -64,18 +57,20 @@ def get_substitutes(request, product_id):
 
     return render(request, "app/substitutes.html", context)
 
+
 def get_product_details(request, product_id):
 
     product = Product.objects.get(pk=product_id)
-    
+
     if product.favorites.filter(id=request.user.id).exists():
         product.is_fav = True
     else:
         product.is_fav = False
-        
+
     context = {"product": product}
 
     return render(request, "app/product_details.html", context)
+
 
 @login_required()
 def add_favorite(request, product_id):
@@ -87,5 +82,19 @@ def add_favorite(request, product_id):
         product.favorites.remove(user.id)
     else:
         product.favorites.add(user.id)
-    
+
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
+@login_required()
+def favorites_list(request):
+    user = request.user
+    favorites = user.favorites.all()
+    for favorite in favorites:
+        if favorite.favorites.filter(id=request.user.id).exists():
+            favorite.is_fav = True
+        else:
+            favorite.is_fav = False
+
+    context = {"favorites": favorites}
+    return render(request, "app/favorites.html", context)
