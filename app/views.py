@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.db.models import Count, Q
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from .models import Product, Category
+from .models import Product
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView
+from app.service import Service
 
+service = Service()
 
 def main(request):
     return render(request, 'base/home.html')
@@ -31,24 +33,11 @@ class SearchResults(ListView):
 
 def get_substitutes(request, product_id):
 
-    product_to_replace = Product.objects.get(pk=product_id)
-
-    product_category = Category.objects.filter(
-        product__id=product_to_replace.id)
-
-    substitutes = (
-        Product.objects.filter(categories__in=product_category)
-        .filter(nutriscore_grade__lt=product_to_replace.nutriscore_grade)
-        .annotate(nb_cat=Count("categories"))
-        .filter(nb_cat__gte=4)
-        .filter(nutriscore_grade__lt=product_to_replace.nutriscore_grade)
-        .order_by("nutriscore_grade")[:24]
-    )
-    for substitute in substitutes:
-        if substitute.favorites.filter(id=request.user.id).exists():
-            substitute.is_fav = True
-        else:
-            substitute.is_fav = False
+    user = request.user
+    product_to_replace = service.manage_get_product(product_id)
+    product_category = service.manage_get_product_category(product_to_replace)
+    substitutes = service.manage_get_potentials_substitutes(product_to_replace, product_category)
+    substitutes = service.manage_sort_out_user_favorite_products(substitutes, user)
 
     context = {
         "product": product_to_replace,

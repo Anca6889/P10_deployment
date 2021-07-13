@@ -20,3 +20,5 @@ class UrlsTests(SimpleTestCase):
     def test_sign_out_url_is_resolved(self):
         url = reverse("logout")
         self.assertEquals(resolve(url).func, views.sign_out)
+
+ # py manage.py test
