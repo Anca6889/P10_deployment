@@ -27,3 +27,31 @@ class Service:
             else:
                 product.is_fav = False
         return products
+
+    def manage_sort_out_if_product_is_favorite(self, product, user):
+        if product.favorites.filter(id=user.id).exists():
+            product.is_fav = True
+        else:
+            product.is_fav = False
+        return product
+
+    def manage_setup_get_substitutes_context(self, product_to_replace, substitutes):
+        context = {
+        "product": product_to_replace,
+        "substitutes": substitutes
+        }
+        return context
+
+    def manage_setup_get_product_details_context(self, product):
+        context = {"product": product}
+        return context
+
+    def manage_setup_favorites_list_context(self, favorites):
+        context = {"favorites": favorites}
+        return context
+
+    def manage_add_favorite(self, product, user):
+        if product.favorites.filter(id=user.id).exists():
+            product.favorites.remove(user.id)
+        else:
+            product.favorites.add(user.id)
