@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.db.utils import DataError, IntegrityError
 from app.models import Product, Category
 from progress.bar import FillingSquaresBar
-
+from app.config import config as c
 import requests
 
 
@@ -28,61 +28,20 @@ class Command(BaseCommand):
     def request_off_api(self):
         help = 'feel the database with OFF products'
 
-        # SETTING BEGIN
-        CATEGORIES = [
-            "aliments-et-boissons-a-base-de-vegetaux",
-            "aliments-d-origine-vegetale",
-            "boissons",
-            "produits-de-la-mer",
-            "sauces",
-            "confiseries",
-            "conserves",
-            "pates-a-tartiner",
-            "petit-dejeuners",
-            "sodas",
-            "snacks",
-            "aperitif",
-            "produits-laitiers",
-            "plats-prepares",
-            "desserts",
-            "complements-alimentaires",
-            "snacks-sucres",
-            "charcuteries",
-            "fromages",
-            "condiments",
-            "surgeles",
-            "pizzas"
-        ]
-        URL = "https://fr.openfoodfacts.org/cgi/search.pl"
-
-        FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url,categories"
-
-        PAGE_SIZE = 500
-        # SETTING END
-
-        payload = {
-            "search_simple": 1,
-            "action": "process",
-            "tagtype_0": "categories",
-            "tag_contains_0": "contains",
-            "tag_0": None,
-            "sort_by": "unique_scans_n",
-            "page_size": PAGE_SIZE,
-            "json": 1,
-            "fields": FIELDS
-        }
-
+        categories = c.CATEGORIES
+        payload = c.PAYLOAD
+        url = c.URL
         products = []
 
         with FillingSquaresBar(
             "Downloading products from OFF...",
-                max=len(CATEGORIES), suffix="%(percent)d%%") as bar:
+                max=len(categories), suffix="%(percent)d%%") as bar:
 
-            for category in CATEGORIES:
+            for category in categories:
                 payload["tag_0"] = category
 
                 try:
-                    data = requests.get(URL, params=payload)
+                    data = requests.get(url, params=payload)
                     results = data.json()
                     products.append(results['products'])
                     bar.next()
@@ -93,7 +52,7 @@ class Command(BaseCommand):
         bar.finish()
         print("downloading completed !")
         self.delete_uncomplete_products(products)
-
+    
     def delete_uncomplete_products(self, products):
 
         complete_products = []
@@ -193,5 +152,3 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         self.launch_process()
-
-
