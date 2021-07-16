@@ -15,5 +15,5 @@ class AuthenticationBackend(ModelBackend):
                 email__iexact=username))
             if user.check_password(password):
                 return user
-        except user.DoesNotExist:
+        except usermodel.DoesNotExist:
             pass

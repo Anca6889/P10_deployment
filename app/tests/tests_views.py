@@ -32,7 +32,7 @@ class Viewstests(TestCase):
         self.product_details_url = reverse("product", args=[1])
         self.add_favorite_url = reverse("add_favorite", args=[1])
         self.favorites_list_url = reverse("favorites")
-        self.explore_products_url = reverse("product_list")
+        self.explore_products_url = reverse("product_list")+"?search=testname"
 
     def test_main_view(self):
         response = self.client.get(self.main_url)
@@ -70,7 +70,7 @@ class Viewstests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "app/favorites.html")
 
-    # def test_SearchResults_view(self):
-    #     response = self.client.get(self.explore_products_url)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, "app/product_list.html")
+    def test_SearchResults_view(self):
+        response = self.client.get(self.explore_products_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "app/product_list.html")
