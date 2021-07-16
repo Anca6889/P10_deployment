@@ -1,3 +1,8 @@
+"""
+This module contains all the views necessary to run the product research and
+also the base templates. This module is mostly working with app/service.py
+"""
+
 from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -7,6 +12,7 @@ from django.views.generic import ListView
 from app.service import Service
 
 service = Service()
+
 
 def main(request):
     return render(request, 'base/home.html')
@@ -29,15 +35,19 @@ class SearchResults(ListView):
         query = self.request.GET.get("search")
         return Product.objects.filter(
             Q(product_name_fr__icontains=query)
-            )
+        )
+
 
 def get_substitutes(request, product_id):
     user = request.user
     product_to_replace = service.manage_get_product(product_id)
     product_category = service.manage_get_product_category(product_to_replace)
-    substitutes = service.manage_get_potentials_substitutes(product_to_replace, product_category)
-    substitutes = service.manage_sort_out_user_favorite_products(substitutes, user)
-    context = service.manage_setup_get_substitutes_context(product_to_replace, substitutes)
+    substitutes = service.manage_get_potentials_substitutes(
+        product_to_replace, product_category)
+    substitutes = service.manage_sort_out_user_favorite_products(
+        substitutes, user)
+    context = service.manage_setup_get_substitutes_context(
+        product_to_replace, substitutes)
     return render(request, "app/substitutes.html", context)
 
 

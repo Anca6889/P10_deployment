@@ -1,9 +1,16 @@
+"""
+    This module contains all the basic methods of app/views.py
+    This way alow a optimise refactoring and make it easier to unittest.
+"""
+
 from app.models import Product, Category
 from django.db.models import Count
 
-class Service:
 
-    def manage_get_product(self,product_id):
+class Service:
+    """Contain all the methods of the app/views.py."""
+
+    def manage_get_product(self, product_id):
         return Product.objects.get(pk=product_id)
 
     def manage_get_product_category(self, product):
@@ -37,8 +44,8 @@ class Service:
 
     def manage_setup_get_substitutes_context(self, product_to_replace, substitutes):
         context = {
-        "product": product_to_replace,
-        "substitutes": substitutes
+            "product": product_to_replace,
+            "substitutes": substitutes
         }
         return context
 

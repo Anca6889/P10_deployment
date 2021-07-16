@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='favorites',
-            field=models.ManyToManyField(related_name='favorites', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                related_name='favorites', to=settings.AUTH_USER_MODEL),
         ),
     ]

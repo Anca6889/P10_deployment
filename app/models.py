@@ -1,16 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 
 class Category(models.Model):
+    """Table containing products categories in DB"""
+
     name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return self.name
 
+
 class Product(models.Model):
+    """Table containing products in DB"""
+
     product_name_fr = models.CharField(max_length=200)
     brands = models.CharField(max_length=200)
     nutriscore_grade = models.CharField(max_length=1)

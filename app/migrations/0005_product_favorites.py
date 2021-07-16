@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='favorites',
-            field=models.ManyToManyField(blank=True, related_name='favorites', to='authentication.User'),
+            field=models.ManyToManyField(
+                blank=True, related_name='favorites', to='authentication.User'),
         ),
     ]

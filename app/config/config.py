@@ -1,3 +1,8 @@
+"""
+    This module contains the constants of the API call
+    in app/management/commands/database.py
+"""
+
 CATEGORIES = [
     "aliments-et-boissons-a-base-de-vegetaux",
     "aliments-d-origine-vegetale",
@@ -25,7 +30,8 @@ CATEGORIES = [
 
 URL = "https://fr.openfoodfacts.org/cgi/search.pl"
 
-FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url,categories"
+FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,"
+"image_front_url,categories"
 
 PAGE_SIZE = 500
 

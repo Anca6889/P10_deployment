@@ -1,3 +1,9 @@
+"""
+This module will do all the process of filling the database and calling the
+Open food facts API.
+This module is callable with the command 'manage.py databse'
+"""
+
 from django.core.management.base import BaseCommand
 from django.db.utils import DataError, IntegrityError
 from app.models import Product, Category
@@ -26,7 +32,6 @@ class Command(BaseCommand):
         self.request_off_api()
 
     def request_off_api(self):
-        help = 'feel the database with OFF products'
 
         categories = c.CATEGORIES
         payload = c.PAYLOAD
@@ -48,11 +53,11 @@ class Command(BaseCommand):
 
                 except ValueError as err:
                     print("Error: {}".format(err))
-        
+
         bar.finish()
         print("downloading completed !")
         self.delete_uncomplete_products(products)
-    
+
     def delete_uncomplete_products(self, products):
 
         complete_products = []
@@ -77,7 +82,7 @@ class Command(BaseCommand):
         self.get_categories(complete_products)
 
     def get_categories(self, products):
-        
+
         categories = []
         with FillingSquaresBar(
             "Insering products in database...",
@@ -96,7 +101,7 @@ class Command(BaseCommand):
                         if category not in categories:
                             categories.append(category)
                 product["categories"] = prod_cats
-    
+
                 self.insert_categories(prod_cats, product)
 
                 bar.next()
@@ -108,13 +113,12 @@ class Command(BaseCommand):
 
         for category in categories:
             cat = Category.objects.get_or_create(
-            name=category)
+                name=category)
 
             self.insert_product_in_db(product, cat[0])
-            
 
     def insert_product_in_db(self, product, cat):
-    
+
         try:
             product_name_fr = product['product_name_fr']
             brands = product['brands']
@@ -122,7 +126,7 @@ class Command(BaseCommand):
             stores = product['stores']
             url = product['url']
             image = product['image_front_url']
-            
+
             try:
 
                 prod = Product.objects.get_or_create(
@@ -147,7 +151,6 @@ class Command(BaseCommand):
 
         except KeyError:
             pass
-
 
     def handle(self, *args, **options):
 
