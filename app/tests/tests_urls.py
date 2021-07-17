@@ -31,9 +31,9 @@ class UrlsTests(SimpleTestCase):
         url = reverse("product", kwargs={"product_id": 1})
         self.assertEquals(resolve(url).func, views.get_product_details)
 
-    def test_add_favorite_url_is_resolved(self):
-        url = reverse("add_favorite", kwargs={"product_id": 1})
-        self.assertEquals(resolve(url).func, views.add_favorite)
+    def test_add_or_remove_favorite_url_is_resolved(self):
+        url = reverse("add_or_remove_favorite", kwargs={"product_id": 1})
+        self.assertEquals(resolve(url).func, views.add_or_remove_favorite)
 
     def test_favorites_url_is_resolved(self):
         url = reverse("favorites",)

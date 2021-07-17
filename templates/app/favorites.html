@@ -47,10 +47,10 @@
                 <div class="card-footer row">
                     {% if user.is_authenticated %}
                     {% if favorite.is_fav %}
-                    <a href="{% url 'add_favorite' favorite.id %}" class="bi bi-heart-fill" style="font-size: 2rem"
+                    <a href="{% url 'add_or_remove_favorite' favorite.id %}" class="bi bi-heart-fill" style="font-size: 2rem"
                         role="button" data-toggle="tooltip" data-placement="bottom" title="Retirer des favoris"></a>
                     {% else %}
-                    <a href="{% url 'add_favorite' favorite.id %}" class="bi bi-heart" style="font-size: 2rem"
+                    <a href="{% url 'add_or_remove_favorite' favorite.id %}" class="bi bi-heart" style="font-size: 2rem"
                         role="button" data-toggle="tooltip" data-placement="bottom" title="Ajouter aux favoris"></a>
                     {% endif %}
                     {% endif %}

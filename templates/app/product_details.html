@@ -51,10 +51,10 @@
             <div class="d-flex flex-row justify-content-center my-3">
                 {% if user.is_authenticated %}
                     {% if product.is_fav %}
-                        <a href="{% url 'add_favorite' product.id %}" class="bi bi-heart-fill" style="font-size: 2rem" role="button"
+                        <a href="{% url 'add_or_remove_favorite' product.id %}" class="bi bi-heart-fill" style="font-size: 2rem" role="button"
                             data-toggle="tooltip" data-placement="bottom" title="Retirer des favoris"></a>
                     {% else %}
-                        <a href="{% url 'add_favorite' product.id %}" class="bi bi-heart" style="font-size: 2rem" role="button"
+                        <a href="{% url 'add_or_remove_favorite' product.id %}" class="bi bi-heart" style="font-size: 2rem" role="button"
                             data-toggle="tooltip" data-placement="bottom" title="Ajouter aux favoris"></a>
                     {% endif %}
                 {% endif %}

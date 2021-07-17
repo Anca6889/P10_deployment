@@ -30,7 +30,7 @@ class Viewstests(TestCase):
         self.contact_url = reverse("contact")
         self.substitutes_url = reverse("substitutes", args=[1])
         self.product_details_url = reverse("product", args=[1])
-        self.add_favorite_url = reverse("add_favorite", args=[1])
+        self.add_or_remove_favorite_url = reverse("add_or_remove_favorite", args=[1])
         self.favorites_list_url = reverse("favorites")
         self.explore_products_url = reverse("product_list")+"?search=testname"
 
@@ -59,9 +59,9 @@ class Viewstests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "app/product_details.html")
 
-    def test_get_add_favorite_view(self):
+    def test_get_add_or_remove_favorite_view(self):
         self.client.force_login(self.mock_user)
-        response = self.client.get(self.add_favorite_url)
+        response = self.client.get(self.add_or_remove_favorite_url)
         self.assertEqual(response.status_code, 302)
 
     def test_get_favorites_list_view(self):

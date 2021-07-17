@@ -15,11 +15,13 @@ import requests
 class Command(BaseCommand):
 
     def launch_process(self):
+        """Launch the all process"""
 
         print("regen database process launched...")
         self.clear_db()
 
     def clear_db(self):
+        """Delete all datas in DB"""
 
         print("dropping actual database...")
         product_obj = Product.objects.all()
@@ -32,6 +34,7 @@ class Command(BaseCommand):
         self.request_off_api()
 
     def request_off_api(self):
+        """Download all products from OFF API and insert them in a list"""
 
         categories = c.CATEGORIES
         payload = c.PAYLOAD
@@ -59,6 +62,7 @@ class Command(BaseCommand):
         self.delete_uncomplete_products(products)
 
     def delete_uncomplete_products(self, products):
+        """Delete all product who are missing an usfull element"""
 
         complete_products = []
         with FillingSquaresBar(
@@ -82,6 +86,10 @@ class Command(BaseCommand):
         self.get_categories(complete_products)
 
     def get_categories(self, products):
+        """
+        Will extract each diffrents categories from the products and
+        insert them in a list
+        """
 
         categories = []
         with FillingSquaresBar(
@@ -110,6 +118,7 @@ class Command(BaseCommand):
         print("Process achieved with succsess !")
 
     def insert_categories(self, categories, product):
+        """Will insert all the categories in DB"""
 
         for category in categories:
             cat = Category.objects.get_or_create(
@@ -118,6 +127,7 @@ class Command(BaseCommand):
             self.insert_product_in_db(product, cat[0])
 
     def insert_product_in_db(self, product, cat):
+        """Will insert all the product in DB"""
 
         try:
             product_name_fr = product['product_name_fr']
@@ -153,5 +163,6 @@ class Command(BaseCommand):
             pass
 
     def handle(self, *args, **options):
+        """Alow to use the Django command 'manage.py database'"""
 
         self.launch_process()

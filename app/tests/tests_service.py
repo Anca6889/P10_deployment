@@ -56,9 +56,9 @@ class ServiceTests(TestCase):
         service.manage_get_product(1)
         self.assertEqual(self.mock_product.product_name_fr, 'testname')
 
-    def test_manage_get_product_category(self):
+    def test_manage_get_product_categories(self):
         self.mock_product.categories.set("1")
-        product_category = service.manage_get_product_category(
+        product_category = service.manage_get_product_categories(
             self.mock_product)
         items = []
         for values in product_category.values():
@@ -125,11 +125,11 @@ class ServiceTests(TestCase):
                     self.assertEqual(vals, favorites)
 
     def test_manage_add_favorite(self):
-        service.manage_add_favorite(self.mock_product2, self.mock_user)
+        service.manage_add_or_remove_favorite(self.mock_product2, self.mock_user)
         for value in self.mock_product.favorites.values():
             self.assertEqual(value, self.mock_user.id)
 
     def test_manage_remove_favorite(self):
-        service.manage_add_favorite(self.mock_product2, self.mock_user)
+        service.manage_add_or_remove_favorite(self.mock_product2, self.mock_user)
         for value in self.mock_product.favorites.values():
             self.assertEqual(value, None)
