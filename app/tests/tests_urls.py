@@ -1,3 +1,5 @@
+"""This module will test all the urls"""
+
 from django.test import SimpleTestCase
 from django.urls import resolve, reverse
 from app.views import SearchResults
@@ -5,6 +7,10 @@ from app import views
 
 
 class UrlsTests(SimpleTestCase):
+    """
+    This class will test the urls using resolve and reverse modules
+    Each method name describe exactly which url is tested.
+    """
 
     def test_main_url_is_resolved(self):
         url = reverse("main")

@@ -1,3 +1,5 @@
+"""This module contain the models to build the DB tables"""
+
 from django.db import models
 from django.contrib.auth.models import User
 

@@ -1,3 +1,5 @@
+"""This module will test the views"""
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -5,8 +7,16 @@ from app.models import Product
 
 
 class Viewstests(TestCase):
+    """
+    This class test all the views
+    As most of the methods of the views are contained in app/service.py,
+    The only thing we still have to test is that the views return the correct
+    templates. We will need to mock a user, a product and catch all the urls.
+    Each method name describe exactly which view is tested.
+    """
 
     def setUp(self):
+        """Setup the mocks and urls"""
 
         self.mock_user = User.objects.create(
             id='1',

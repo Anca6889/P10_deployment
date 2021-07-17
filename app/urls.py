@@ -1,3 +1,7 @@
+"""
+This module contain all the necessary urls of the base and product research
+"""
+
 from django.urls import path
 from app import views
 
