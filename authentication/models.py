@@ -1,3 +1,5 @@
+"""This module contain the models to build the DB tables"""
+
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
@@ -12,7 +14,8 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError('Users must have a password')
 
-        user = self.model(email=self.normalize_email(email),username=username,)
+        user = self.model(email=self.normalize_email(
+            email), username=username,)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -29,7 +32,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    
+
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,

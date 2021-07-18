@@ -53,10 +53,9 @@ class Databasetests(TestCase):
 
     @patch("app.management.commands.database.Command.handle", mock_handle)
     @patch("app.management.commands.database.Command.request_off_api",
-     mock_request_api)
+           mock_request_api)
     def test_database_process(self):
         """Lauch the integration test with the two mocks"""
 
         response = self.db.handle()
         self.assertEqual(response, "everything is running fine")
-

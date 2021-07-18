@@ -11,7 +11,7 @@ class Viewstests(TestCase):
     This class test all the views
     As most of the methods of the views are contained in app/service.py,
     The only thing we still have to test is that the views return the correct
-    templates. We will need to mock a user, a product and catch all the urls.
+    templates. It'neccesary to mock a user, a product and catch all the urls.
     Each method name describe exactly which view is tested.
     """
 
@@ -40,7 +40,8 @@ class Viewstests(TestCase):
         self.contact_url = reverse("contact")
         self.substitutes_url = reverse("substitutes", args=[1])
         self.product_details_url = reverse("product", args=[1])
-        self.add_or_remove_favorite_url = reverse("add_or_remove_favorite", args=[1])
+        self.add_or_remove_favorite_url = reverse("add_or_remove_favorite",
+                                                  args=[1])
         self.favorites_list_url = reverse("favorites")
         self.explore_products_url = reverse("product_list")+"?search=testname"
 

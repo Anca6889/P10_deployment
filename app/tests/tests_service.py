@@ -50,7 +50,7 @@ class ServiceTests(TestCase):
             id='2',
             name='testcategory2'
         )
-        self.mock_category3= Category.objects.create(
+        self.mock_category3 = Category.objects.create(
             id='3',
             name='testcategory3'
         )
@@ -65,7 +65,6 @@ class ServiceTests(TestCase):
         service.manage_get_product(1)
         self.assertEqual(self.mock_product.product_name_fr, 'testname')
 
-
     def test_manage_get_product_categories(self):
         """Test that method get the assigned category of the product"""
 
@@ -78,11 +77,10 @@ class ServiceTests(TestCase):
                 items.append(value)
         self.assertIn('testcategory', items)
 
-
     def test_manage_get_potentials_substitutes(self):
         """
         Test that the method get correctly the 2nd mock product wich have an
-        better nutriscore than the 1st product 
+        better nutriscore than the 1st product
         With the 1st product and his categories as parameters
         """
 
@@ -96,7 +94,6 @@ class ServiceTests(TestCase):
             for value in values.values():
                 items.append(value)
         self.assertIn('testname2', items)
-    
 
     def test_manage_sort_out_user_favorite_products(self):
         """
@@ -106,24 +103,24 @@ class ServiceTests(TestCase):
 
         self.mock_product.favorites.add("1")
         products = [self.mock_product, self.mock_product2]
-        service.manage_sort_out_user_favorite_products(products, self.mock_user)
+        service.manage_sort_out_user_favorite_products(
+            products, self.mock_user)
         self.assertEqual(self.mock_product.is_fav, True)
         self.assertEqual(self.mock_product2.is_fav, False)
-
 
     def test_manage_setup_get_substitutes_context(self):
         """Test that the context of the method is correctly set"""
 
         product_to_replace = self.mock_product
         substitutes = [self.mock_product2]
-        context = service.manage_setup_get_substitutes_context(product_to_replace, substitutes)
+        context = service.manage_setup_get_substitutes_context(
+            product_to_replace, substitutes)
         for keys, vals in context.items():
             for key in keys:
                 if key == "product":
                     self.assertEqual(vals, self.mock_product)
                 elif key == "substitutes":
                     self.assertEqual(vals, self.mock_product2)
-    
 
     def test_manage_sort_out_if_product_is_favorite_is_true(self):
         """
@@ -136,7 +133,6 @@ class ServiceTests(TestCase):
             self.mock_product, self.mock_user)
         self.assertEqual(self.mock_product.is_fav, True)
 
-
     def test_manage_sort_out_if_product_is_favorite_is_false(self):
         """
         Test that the method will return correctly that a product mock
@@ -147,7 +143,6 @@ class ServiceTests(TestCase):
             self.mock_product, self.mock_user)
         self.assertEqual(self.mock_product.is_fav, False)
 
-        
     def test_manage_setup_get_product_details_context(self):
         """Test that the context of the method is correctly set"""
 
@@ -157,7 +152,6 @@ class ServiceTests(TestCase):
             for key in keys:
                 if key == "product":
                     self.assertEqual(vals, self.mock_product)
-
 
     def test_manage_setup_favorites_list_context(self):
         """Test that the context of the method is correctly set"""
@@ -170,14 +164,13 @@ class ServiceTests(TestCase):
                 if key == "favorites":
                     self.assertEqual(vals, favorites)
 
-
     def test_manage_add_favorite(self):
         """Test that 2nd product mock is correctly insert in favorites"""
 
-        service.manage_add_or_remove_favorite(self.mock_product2, self.mock_user)
+        service.manage_add_or_remove_favorite(
+            self.mock_product2, self.mock_user)
         for value in self.mock_product.favorites.values():
             self.assertEqual(value, self.mock_user.id)
-
 
     def test_manage_remove_favorite(self):
         """
@@ -185,7 +178,8 @@ class ServiceTests(TestCase):
         METHOD IS SIMILAR THAN ABOVE, BECAUSE THE ABOVE METHOD INSERT
         PRODUCT IN FAVORITES, SO THE BELOW SIMILAR METHOD WILL REMOVE IT
         """
-        
-        service.manage_add_or_remove_favorite(self.mock_product2, self.mock_user)
+
+        service.manage_add_or_remove_favorite(
+            self.mock_product2, self.mock_user)
         for value in self.mock_product.favorites.values():
             self.assertEqual(value, None)

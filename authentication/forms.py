@@ -1,3 +1,5 @@
+"""This module contains the specifics authentication formulars used in views"""
+
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
