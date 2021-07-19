@@ -10,9 +10,9 @@ requests = "*"
 flake8 = "*"
 django-heroku = "*"
 gunicorn = "*"
+progress = "*"
 
 [dev-packages]
-progress = "*"
 selenium = "*"
 coverage = "*"
 
