@@ -59,7 +59,7 @@ class Command(BaseCommand):
 
         bar.finish()
         print("downloading completed !")
-        print(products)
+
         self.delete_uncomplete_products(products)
 
     def delete_uncomplete_products(self, products):

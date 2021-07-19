@@ -32,7 +32,7 @@ URL = "https://fr.openfoodfacts.org/cgi/search.pl"
 
 FIELDS = "brands,product_name_fr,stores,nutriscore_grade,url,image_front_url,categories"
 
-PAGE_SIZE = 500
+PAGE_SIZE = 75
 
 PAYLOAD = {
     "search_simple": 1,
