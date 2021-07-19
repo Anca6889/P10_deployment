@@ -8,6 +8,8 @@ django = "*"
 psycopg2 = "*"
 requests = "*"
 flake8 = "*"
+django-heroku = "*"
+gunicorn = "*"
 
 [dev-packages]
 progress = "*"
