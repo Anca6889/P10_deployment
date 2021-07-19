@@ -1,1 +1,1 @@
-web: gunicorn P8_pur_beurre.wsgi --log-gile -
+web: gunicorn P8_pur_beurre.wsgi --log-file -
