@@ -1,0 +1,27 @@
+language: python
+python:
+  - "3.9"
+
+addons:
+  chrome: stable
+
+branches:
+  only:
+    - main
+    
+install:
+  - pip install pipenv
+  - pipenv install --dev
+
+before_script:
+  - install-webdrivers --path webdrivers
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="P8_pur_beurre.travis"
+
+services:
+  - postgresql
+
+script:
+  - python manage.py test 
