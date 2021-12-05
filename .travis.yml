@@ -18,7 +18,7 @@ before_script:
 
 env:
   global:
-    - DJANGO_SETTINGS_MODULE="P8_pur_beurre.travis"
+    - DJANGO_SETTINGS_MODULE="P8_pur_beurre.settings.travis"
 
 services:
   - postgresql
