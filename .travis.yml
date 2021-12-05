@@ -8,7 +8,7 @@ addons:
 branches:
   only:
     - main
-    
+
 install:
   - pip install pipenv
   - pipenv install --dev
@@ -24,4 +24,4 @@ services:
   - postgresql
 
 script:
-  - python manage.py test -v
+  - python manage.py test
