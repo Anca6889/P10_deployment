@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 notepad.txt
+P8_pur_beurre/settings/production.py
