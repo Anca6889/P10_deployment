@@ -14,7 +14,7 @@ install:
   - pipenv install --dev
 
 before_script:
-  - install-webdrivers --path webdrivers /usr/local/bin
+  - install-webdrivers --path webdrivers
 
 env:
   global:
