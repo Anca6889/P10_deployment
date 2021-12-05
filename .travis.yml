@@ -21,6 +21,7 @@ before_script:
 env:
   global:
     - DJANGO_SETTINGS_MODULE="P8_pur_beurre.settings.travis"
+    - SELENIUM_WEBDRIVER=headless
 
 services:
   - postgresql
