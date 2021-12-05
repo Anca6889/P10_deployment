@@ -1,14 +1,16 @@
 language: python
+
 python:
-  - "3.9"
+  - '3.9'
 
 addons:
   chrome: stable
+  firefox: latest
 
 branches:
   only:
-    - main
-    
+    - staging
+
 install:
   - pip install pipenv
   - pipenv install --dev
@@ -24,4 +26,4 @@ services:
   - postgresql
 
 script:
-  - python manage.py test 
+  - python manage.py test -v
