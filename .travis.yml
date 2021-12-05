@@ -9,12 +9,12 @@ branches:
   only:
     - main
 
-install:
+gitinstall:
   - pip install pipenv
   - pipenv install --dev
 
 before_script:
-  - install-webdrivers --path webdrivers
+  - install-webdrivers
 
 env:
   global:
