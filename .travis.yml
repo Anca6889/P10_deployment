@@ -14,9 +14,9 @@ gitinstall:
   - pipenv install --dev
 
 before_script:
-  - wget https://chromedriver.storage.googleapis.com/91.0.4472.101/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
-  - sudo mv chromedriver /usr/local/bin
+  - wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+  - wget https://chromedriver.storage.googleapis.com/`cat LATEST_RELEASE`/chromedriver_linux64.zip
+  - sudo unzip chromedriver_linux64.zip -d /usr/local/bin
   - install-webdrivers --path /usr/local/bin
 
 env:
