@@ -13,7 +13,7 @@ class BrowserTests(StaticLiveServerTestCase):
     def setUp(self):
         """setup the webdriver with Google Chrome driver"""
 
-        self.driver = webdriver.Chrome(executable_path=(str(BASE_DIR / 'chromedriver')))
+        self.driver = webdriver.Chrome(executable_path=(str(BASE_DIR / 'webdrivers' / 'chromedriver')))
 
     def test_login_logout_signin(self):
         """This method will do all the actions, check comments below"""
