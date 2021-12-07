@@ -14,14 +14,11 @@ gitinstall:
   - pipenv install --dev
 
 before_script:
-  - wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-  - wget https://chromedriver.storage.googleapis.com/`cat LATEST_RELEASE`/chromedriver_linux64.zip
-  - sudo unzip chromedriver_linux64.zip -d /usr/local/bin
+   install-webdrivers --path /usr/local/bin/
 
 env:
   global:
     - DJANGO_SETTINGS_MODULE="P8_pur_beurre.settings.travis"
-    - SELENIUM_WEBDRIVER=headless
 
 services:
   - postgresql
