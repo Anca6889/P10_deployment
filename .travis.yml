@@ -17,6 +17,7 @@ before_script:
   - wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
   - wget https://chromedriver.storage.googleapis.com/`cat LATEST_RELEASE`/chromedriver_linux64.zip
   - sudo unzip chromedriver_linux64.zip -d /usr/local/bin
+  - psql -c 'create database db_p8;' -U postgres
 
 env:
   global:
@@ -26,4 +27,6 @@ services:
   - postgresql
 
 script:
+  - python manage.py makemigrations
+  - python manage.py migrate
   - python manage.py test
