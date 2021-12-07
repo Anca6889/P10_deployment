@@ -6,6 +6,11 @@ import random
 import string
 import time
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--remote-debugging-port=9222')
+chrome_options.add_argument('--window-size=1920x1080')
 
 class BrowserTests(StaticLiveServerTestCase):
     """This class will test a registering, logout and login an user"""
@@ -13,7 +18,10 @@ class BrowserTests(StaticLiveServerTestCase):
     def setUp(self):
         """setup the webdriver with Google Chrome driver"""
 
-        self.driver = webdriver.Chrome(executable_path=(str(BASE_DIR / 'webdrivers' / 'chromedriver')))
+        self.driver = webdriver.Chrome(
+            executable_path=str(BASE_DIR / 'webdrivers' / 'chromedriver'),
+            options=chrome_options,
+        )
 
     def test_login_logout_signin(self):
         """This method will do all the actions, check comments below"""
