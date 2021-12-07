@@ -14,9 +14,7 @@ gitinstall:
   - pipenv install --dev
 
 before_script:
-  - wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-  - wget https://chromedriver.storage.googleapis.com/`cat LATEST_RELEASE`/chromedriver_linux64.zip
-  - sudo unzip chromedriver_linux64.zip -d /home/travis/build/Anca6889/P10_deployment/
+  - install-webdrivers --path webdrivers
 
 env:
   global:
