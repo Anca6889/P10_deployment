@@ -1,5 +1,5 @@
 """This module will use selenium for testing with Google Chrome Navigator"""
-
+from P8_pur_beurre.settings import BASE_DIR
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import time
@@ -11,7 +11,7 @@ class BrowserTests(StaticLiveServerTestCase):
     def setUp(self):
         """setup the webdriver with Google Chrome driver"""
 
-        self.driver = webdriver.Chrome(executable_path="chromedriver.exe")
+        self.driver = webdriver.Chrome(executable_path=(str(BASE_DIR / 'chromedriver')))
 
     def test_search_product_and_legals(self):
         """This method will do all the actions, check comments below"""
