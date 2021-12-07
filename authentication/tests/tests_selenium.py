@@ -47,7 +47,7 @@ class BrowserTests(StaticLiveServerTestCase):
         time.sleep(2)
         self.driver.find_element_by_id("registration_button").click()
         time.sleep(2)
-        self.assertIn("http://127.0.0.1:8000/authentication/login/",
+        self.assertIn("{}/authentication/login".format(self.live_server_url),
                       self.driver.current_url)
 
         # click on logout
@@ -67,5 +67,5 @@ class BrowserTests(StaticLiveServerTestCase):
         time.sleep(2)
         self.driver.find_element_by_id("login_button").click()
         time.sleep(2)
-        self.assertIn("http://127.0.0.1:8000/authentication/login/",
+        self.assertIn("{}/authentication/login".format(self.live_server_url),
                       self.driver.current_url)
