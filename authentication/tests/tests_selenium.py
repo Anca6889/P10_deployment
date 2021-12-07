@@ -32,7 +32,7 @@ class BrowserTests(StaticLiveServerTestCase):
         stringmail = (''.join(random.choice(letters) for i in range(10)))
 
         # go to main page
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get(self.live_server_url)
 
         # click on the registration page
         sign_in = self.driver.find_element_by_link_text("S'inscrire")

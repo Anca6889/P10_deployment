@@ -25,7 +25,7 @@ class BrowserTests(StaticLiveServerTestCase):
         """This method will do all the actions, check comments below"""
 
         # go to main page
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get(self.live_server_url)
 
         # find search bar and send value nutella, find search button and click
         search = self.driver.find_element_by_name("search")
