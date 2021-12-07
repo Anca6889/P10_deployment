@@ -7,7 +7,6 @@ import time
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--remote-debugging-port=9222')
 chrome_options.add_argument('--window-size=1920x1080')
 
 class BrowserTests(StaticLiveServerTestCase):
@@ -25,7 +24,7 @@ class BrowserTests(StaticLiveServerTestCase):
         """This method will do all the actions, check comments below"""
 
         # go to main page
-        self.driver.get(self.live_server_url)
+        self.driver.get("http://127.0.0.1:8000/")
 
         # find search bar and send value nutella, find search button and click
         search = self.driver.find_element_by_name("search")

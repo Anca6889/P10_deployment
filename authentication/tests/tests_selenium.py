@@ -9,7 +9,6 @@ import time
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--remote-debugging-port=9222')
 chrome_options.add_argument('--window-size=1920x1080')
 
 class BrowserTests(StaticLiveServerTestCase):
@@ -32,7 +31,7 @@ class BrowserTests(StaticLiveServerTestCase):
         stringmail = (''.join(random.choice(letters) for i in range(10)))
 
         # go to main page
-        self.driver.get(self.live_server_url)
+        self.driver.get("http://127.0.0.1:8000/")
 
         # click on the registration page
         sign_in = self.driver.find_element_by_link_text("S'inscrire")
